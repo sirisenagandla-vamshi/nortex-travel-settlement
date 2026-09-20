@@ -1,0 +1,9 @@
+{
+  "name": "nortex-travel-settlement",
+  "private": true,
+  "description": "Nortex Industries travel settlement take-home",
+  "scripts": {
+    "build": "npm run build --prefix frontend && npm run build --prefix backend && node scripts/copy-frontend.mjs",
+    "start": "npm run start:prod --prefix backend"
+  }
+}

@@ -1,0 +1,15 @@
+node_modules/
+dist/
+coverage/
+.env
+*.log
+.DS_Store
+frontend/dist/
+backend/dist/
+backend/public/
+submission/slides/
+submission/crops/
+submission/preview/
+submission/build_deliverables.py
+Building a Reimbursement App Workflow Demo.mp4
+

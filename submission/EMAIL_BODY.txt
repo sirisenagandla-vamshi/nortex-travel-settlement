@@ -1,0 +1,28 @@
+Subject: Nortex travel settlement take-home — Vamshi Sirisenagandla
+
+Hi Aryan,
+
+Sharing my take-home for the travel reimbursement round.
+
+What I built: a working app for Nortex’s Bengaluru trip. Sign in from employee_master.csv, raise a Domestic travel request, auto-draft the settlement from the 15 pack emails, apply policy in the open, then Manager → HoD → Finance → Paid.
+
+Attached
+• Nortex_Takehome_Note.pdf — 2 pages, screenshots
+• Nortex_Walkthrough.mp4 — ~90 second screen walkthrough
+
+Run locally
+• API: cd backend && npx prisma migrate deploy && npm run seed && npm run start:dev
+• UI:  cd frontend && npm run dev  →  http://localhost:5173
+
+Demo logins (password = employee code)
+• Chaitanya Reddy / NX-4471 — employee
+• Suresh Iyer / NX-2210 — manager
+• Meera Krishnan / NX-1108 — HoD
+• Ravi Menon / NX-3305 — Finance
+
+End-to-end claim on the demo: CLM-2026-000003, Paid ₹15,068.44 after policy + advance netting.
+
+Happy to walk through it live.
+
+Thanks,
+Vamshi Sirisenagandla

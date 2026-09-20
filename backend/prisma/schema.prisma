@@ -1,0 +1,169 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  EMPLOYEE
+  REPORTING_MANAGER
+  HEAD_OF_DEPARTMENT
+  HEAD_OF_DIVISION
+  MD
+  FINANCE
+}
+
+enum ClaimStatus {
+  DRAFT
+  SUBMITTED
+  PENDING_RM
+  PENDING_HOD
+  PENDING_FINANCE
+  RETURNED
+  REJECTED
+  READY_TO_PAY
+  PAID
+}
+
+enum InboxClassification {
+  CONTEXT
+  INCLUDE
+  EXCLUDE
+  DUPLICATE
+  NOISE
+  OTHER_PERSON
+}
+
+enum ExpenseCategory {
+  LODGING
+  MEALS
+  LOCAL_CONVEYANCE
+  BUSINESS_ENTERTAINMENT
+  AIR_TRAVEL
+  OTHER
+}
+
+enum ApprovalAction {
+  PENDING
+  APPROVED
+  RETURNED
+  REJECTED
+  SKIPPED
+}
+
+model User {
+  id                   String   @id @default(cuid())
+  empCode              String   @unique
+  name                 String
+  email                String   @unique
+  passwordHash         String
+  designation          String
+  department           String
+  costCentre           String
+  city                 String
+  role                 Role
+  reportingManagerCode String?
+  createdAt            DateTime @default(now())
+
+  claims            Claim[]         @relation("Claimant")
+  assignedApprovals ApprovalStep[]  @relation("Approver")
+}
+
+model TravelRequest {
+  id                String   @id @default(cuid())
+  travelRequestId   String   @unique
+  claimantId        String
+  purpose           String
+  destination       String
+  cityClass         String
+  startDate         DateTime
+  endDate           DateTime
+  estimatedPaise    Int
+  advanceRequested  Int
+  advanceDisbursed  Int
+  advanceRef        String?
+  nightsRequested   Int
+  nightsBooked      Int
+  createdAt         DateTime @default(now())
+
+  claims  Claim[]
+  inbox   InboxMessage[]
+}
+
+model InboxMessage {
+  id             String               @id @default(cuid())
+  travelRequestId String
+  filename       String
+  subject        String
+  fromAddr       String
+  receivedAt     DateTime
+  body           String
+  classification InboxClassification
+  reason         String
+  createdAt      DateTime             @default(now())
+
+  travelRequest TravelRequest @relation(fields: [travelRequestId], references: [id])
+  lines         ExpenseLine[]
+}
+
+model Claim {
+  id                 String      @id @default(cuid())
+  claimNumber        String      @unique
+  travelRequestId    String
+  claimantId         String
+  status             ClaimStatus @default(DRAFT)
+  claimedPaise       Int         @default(0)
+  reimbursablePaise  Int         @default(0)
+  disallowedPaise    Int         @default(0)
+  advanceAppliedPaise Int        @default(0)
+  payablePaise       Int         @default(0)
+  financeNotes       String?
+  employeeNotes      String?
+  submittedAt        DateTime?
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+
+  travelRequest TravelRequest  @relation(fields: [travelRequestId], references: [id])
+  claimant      User           @relation("Claimant", fields: [claimantId], references: [id])
+  lines         ExpenseLine[]
+  approvals     ApprovalStep[]
+}
+
+model ExpenseLine {
+  id                 String           @id @default(cuid())
+  claimId            String
+  inboxMessageId     String?
+  category           ExpenseCategory
+  merchant           String
+  description        String
+  incurredOn         DateTime
+  claimedPaise       Int
+  reimbursablePaise  Int
+  disallowedPaise    Int
+  proofRef           String?
+  included           Boolean          @default(true)
+  flags              String[]
+  createdAt          DateTime         @default(now())
+
+  claim        Claim          @relation(fields: [claimId], references: [id])
+  inboxMessage InboxMessage?  @relation(fields: [inboxMessageId], references: [id])
+}
+
+model ApprovalStep {
+  id         String          @id @default(cuid())
+  claimId    String
+  stepOrder  Int
+  role       Role
+  assigneeId String
+  action     ApprovalAction  @default(PENDING)
+  remarks    String?
+  actedAt    DateTime?
+
+  claim    Claim @relation(fields: [claimId], references: [id])
+  assignee User  @relation("Approver", fields: [assigneeId], references: [id])
+
+  @@index([claimId, stepOrder])
+}
