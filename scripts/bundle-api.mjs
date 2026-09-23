@@ -2,12 +2,16 @@ import { build } from 'esbuild';
 import { cpSync, existsSync, mkdirSync, readdirSync } from 'fs';
 import { join } from 'path';
 
-const nestEntry = join(process.cwd(), 'backend', 'dist', 'vercel.js');
-if (!existsSync(nestEntry)) {
+const nestEntry = [
+  join(process.cwd(), 'backend', 'dist', 'src', 'vercel.js'),
+  join(process.cwd(), 'backend', 'dist', 'vercel.js'),
+].find((file) => existsSync(file));
+if (!nestEntry) {
   const distDir = join(process.cwd(), 'backend', 'dist');
-  const listing = existsSync(distDir) ? readdirSync(distDir).join(', ') : 'missing';
-  throw new Error(`backend/dist/vercel.js missing after nest build. dist contents: ${listing}`);
+  const listing = existsSync(distDir) ? readdirSync(distDir, { recursive: true }).join(', ') : 'missing';
+  throw new Error(`Nest vercel.js missing after nest build. dist contents: ${listing}`);
 }
+console.log('bundling Nest from', nestEntry);
 
 await build({
   entryPoints: ['scripts/vercel-api-entry.js'],

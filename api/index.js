@@ -9,6 +9,8 @@ let serverPromise;
 
 function loadNest() {
   const candidates = [
+    path.join(__dirname, '..', 'backend', 'dist', 'src', 'vercel.js'),
+    path.join(process.cwd(), 'backend', 'dist', 'src', 'vercel.js'),
     path.join(__dirname, '..', 'backend', 'dist', 'vercel.js'),
     path.join(process.cwd(), 'backend', 'dist', 'vercel.js'),
   ];
