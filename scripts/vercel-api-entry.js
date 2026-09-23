@@ -10,7 +10,7 @@ if (!process.env.PACK_DIR && fs.existsSync(localPack)) {
   process.env.PACK_DIR = localPack;
 }
 
-const { createNestServer } = require('../backend/dist/src/vercel.js');
+const { createNestServer } = require('../backend/dist/vercel.js');
 
 let cached;
 

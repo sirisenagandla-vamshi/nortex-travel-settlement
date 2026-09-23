@@ -14,6 +14,7 @@ backend/public/
 public/
 api/node_modules/
 api/pack/
+api/index.js
 submission/slides/
 submission/crops/
 submission/preview/
