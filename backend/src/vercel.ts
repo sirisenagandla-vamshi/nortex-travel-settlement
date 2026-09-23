@@ -3,11 +3,13 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
 import { configureApp } from './create-app';
 
-async function bootstrap() {
+let cached: ((req: unknown, res: unknown) => unknown) | undefined;
+
+export async function createNestServer() {
+  if (cached) return cached;
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   configureApp(app);
-  const port = Number(process.env.PORT ?? 3000);
-  await app.listen(port, '0.0.0.0');
-  console.log(`Nortex API on http://localhost:${port}/api`);
+  await app.init();
+  cached = app.getHttpAdapter().getInstance();
+  return cached;
 }
-void bootstrap();

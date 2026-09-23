@@ -4,6 +4,7 @@
   "description": "Nortex Industries travel settlement take-home",
   "scripts": {
     "build": "npm run build --prefix frontend && npm run build --prefix backend && node scripts/copy-frontend.mjs",
-    "start": "npm run start:prod --prefix backend"
+    "start": "npm run start:prod --prefix backend",
+    "vercel-build": "npm run build --prefix frontend && npm run build --prefix backend && npm run prisma:release --prefix backend"
   }
 }

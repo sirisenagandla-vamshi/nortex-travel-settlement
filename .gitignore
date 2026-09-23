@@ -2,8 +2,12 @@ node_modules/
 dist/
 coverage/
 .env
+.env*.local
 *.log
 .DS_Store
+.vercel
+.agents/
+skills-lock.json
 frontend/dist/
 backend/dist/
 backend/public/
@@ -13,3 +17,4 @@ submission/preview/
 submission/build_deliverables.py
 Building a Reimbursement App Workflow Demo.mp4
 
+.env*
