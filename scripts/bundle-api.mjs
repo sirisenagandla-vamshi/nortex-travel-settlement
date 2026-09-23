@@ -11,6 +11,7 @@ await build({
   allowOverwrite: true,
   logLevel: 'info',
   external: ['@prisma/client'],
+  resolveExtensions: ['.js', '.cjs', '.mjs', '.json'],
 });
 
 function copyIfExists(src, dest) {
