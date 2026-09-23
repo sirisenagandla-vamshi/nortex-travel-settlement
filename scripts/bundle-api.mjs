@@ -21,7 +21,14 @@ await build({
   outfile: 'api/index.js',
   allowOverwrite: true,
   logLevel: 'info',
-  external: ['@prisma/client'],
+  external: [
+    '@prisma/client',
+    '@nestjs/microservices',
+    '@nestjs/microservices/microservices-module',
+    '@nestjs/websockets',
+    '@nestjs/websockets/socket-module',
+    'class-transformer/storage',
+  ],
   resolveExtensions: ['.js', '.cjs', '.mjs', '.json'],
 });
 
