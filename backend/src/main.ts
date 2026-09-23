@@ -11,3 +11,5 @@ async function bootstrap() {
   console.log(`Nortex API on http://localhost:${port}/api`);
 }
 void bootstrap();
+
+export { createNestServer } from './vercel';
