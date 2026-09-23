@@ -5,7 +5,7 @@
   "scripts": {
     "build": "npm run build --prefix frontend && npm run build --prefix backend && node scripts/copy-frontend.mjs",
     "start": "npm run start:prod --prefix backend",
-    "vercel-build": "npm run prisma:generate --prefix backend && npm run build --prefix frontend && npm run build --prefix backend && node scripts/copy-public.mjs && npm run prisma:release --prefix backend"
+    "vercel-build": "npm run prisma:generate --prefix backend && npm run build --prefix frontend && npm run build --prefix backend && node scripts/copy-public.mjs && node scripts/bundle-api.mjs && npm run prisma:release --prefix backend"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -17,6 +17,7 @@
     "bcryptjs": "^3.0.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.15.1",
+    "esbuild": "^0.25.12",
     "express": "^5.1.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"

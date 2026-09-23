@@ -12,6 +12,8 @@ frontend/dist/
 backend/dist/
 backend/public/
 public/
+api/node_modules/
+api/pack/
 submission/slides/
 submission/crops/
 submission/preview/
