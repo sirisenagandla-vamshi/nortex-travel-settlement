@@ -5,7 +5,7 @@
   "scripts": {
     "build": "npm run build --prefix frontend && npm run build --prefix backend && node scripts/copy-frontend.mjs",
     "start": "npm run start:prod --prefix backend",
-    "vercel-build": "npm run prisma:generate --prefix backend && npm run build --prefix frontend && npm run build --prefix backend && node scripts/copy-public.mjs && node scripts/bundle-api.mjs && npm run prisma:release --prefix backend"
+    "vercel-build": "npm run prisma:generate --prefix backend && npm run build --prefix frontend && node -e \"require('fs').rmSync('backend/dist',{recursive:true,force:true}); require('fs').rmSync('backend/tsconfig.build.tsbuildinfo',{force:true})\" && npm run build --prefix backend && node scripts/copy-public.mjs && node scripts/bundle-api.mjs && npm run prisma:release --prefix backend"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
