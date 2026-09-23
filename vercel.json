@@ -9,7 +9,7 @@
   ],
   "functions": {
     "api/index.js": {
-      "includeFiles": "{pack/**,backend/node_modules/.prisma/**,backend/node_modules/@prisma/client/**}",
+      "includeFiles": "{pack/**,backend/dist/**,backend/node_modules/**}",
       "maxDuration": 60
     }
   }
