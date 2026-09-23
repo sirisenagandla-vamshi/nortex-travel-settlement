@@ -11,6 +11,7 @@ skills-lock.json
 frontend/dist/
 backend/dist/
 backend/public/
+public/
 submission/slides/
 submission/crops/
 submission/preview/

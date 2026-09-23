@@ -1,14 +1,14 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "installCommand": "npm install --prefix frontend && npm install --prefix backend && npm run prisma:generate --prefix backend",
+  "installCommand": "npm install && npm install --prefix frontend && npm install --prefix backend && npm run prisma:generate --prefix backend",
   "buildCommand": "npm run vercel-build",
   "outputDirectory": "frontend/dist",
   "rewrites": [
-    { "source": "/api/:path*", "destination": "/api" },
-    { "source": "/receipts/:path*", "destination": "/api" }
+    { "source": "/api/:path*", "destination": "/server" },
+    { "source": "/receipts/:path*", "destination": "/server" }
   ],
   "functions": {
-    "api/index.js": {
+    "server.js": {
       "includeFiles": "{pack/**,backend/dist/**,backend/node_modules/**}",
       "maxDuration": 60
     }
